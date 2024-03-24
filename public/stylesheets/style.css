@@ -29,6 +29,7 @@ input {
   padding: 1rem;
   border: none;
   flex: 1;
+  width: 100%;
 }
 
 button {
