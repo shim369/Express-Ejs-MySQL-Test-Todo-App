@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <form action="/" method="post">
-      <label>タスクの追加</label>
-      <input required type="text" name="add" placeholder="何をする?"/>
-      <input type="submit" value="追加"/>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <header>
+    <h1>Todo List App</h1>
+  </header>
+  <div class="todo">
+    <form action="/" method="post" class="form">
+      <input required type="text" name="add" placeholder="何をする?" />
+      <button type="submit">追加</button>
     </form>
+    <% if(todos.length === 0) { %>
+      <p class="nothing-todo">Todoが何もありません。</p>
+    <% } %>
+    <% if(todos.length !== 0) { %>
     <ul>
       <% for(let todo of todos){ %>
-        <li><span><%= todo %></span></li>
+        <li>
+          <span>
+            <%= todo %>
+          </span>
+        </li>
       <% } %>
     </ul>
-  </body>
+  <% } %>
+  </div>
+</body>
+
 </html>
