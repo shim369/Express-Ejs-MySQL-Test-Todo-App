@@ -1,19 +1,45 @@
 let express = require('express');
 let router = express.Router();
+const mysql = require('mysql');
 
-let todos = [];
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'todo_app',
+  authPlugin: 'none',
+});
 
-router.get('/', function(req, res, next) {
-  res.render('index', { 
-    title: 'ToDo App',
-    todos: todos,
-  });
+router.get('/', function (req, res, next) {
+  connection.query(
+    `select * from tasks;`,
+    (error, results) => {
+      console.log(error);
+      console.log(results);
+      res.render('index', {
+        title: 'ToDo App',
+        todos: results,
+      });
+    }
+  );
 });
 
 router.post('/', function(req, res, next) {
+  connection.connect((err) => {
+    if (err) {
+      console.error('Error connecting:', err);
+    } else {
+      console.log('Connected to MySQL server');
+    }
+  });
   const todo = req.body.add;
-  todos.push(todo);
-  res.redirect('/');
+  connection.query(
+    `insert into tasks (user_id, content) values (1, '${todo}');`,
+    (error, results) => {
+      console.log(error);
+      res.redirect('/');
+    }
+  );
 });
 
 module.exports = router;
