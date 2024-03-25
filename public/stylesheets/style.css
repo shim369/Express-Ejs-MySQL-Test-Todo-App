@@ -74,6 +74,9 @@ li {
   background-color: #8bd0f8;
   padding: 1rem;
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 li:nth-child(odd) {
