@@ -10,28 +10,30 @@
 </head>
 
 <body>
-  <header>
-    <h1>Todo List App</h1>
-  </header>
-  <div class="todo">
-    <form action="/" method="post" class="form">
-      <input required type="text" name="add" placeholder="何をする?" />
-      <button type="submit">追加</button>
-    </form>
-    <% if(todos.length === 0) { %>
-      <p class="nothing-todo">Todoが何もありません。</p>
-    <% } %>
-    <% if(todos.length !== 0) { %>
-      <ul>
-        <% for(let todo of todos){ %>
-          <li>
-            <span>
-              <%= todo.content %>
-            </span>
-          </li>
+  <div class="wrapper">
+    <header>
+      <h1>
+        <%= title %>
+      </h1>
+    </header>
+    <div class="todo">
+      <form action="/" method="post">
+        <input required type="text" name="add" placeholder="何をする?" />
+        <button type="submit">追加</button>
+      </form>
+      <% if(todos.length===0) { %>
+        <p class="nothing-todo">Todoが何もありません。</p>
         <% } %>
-      </ul>
-    <% } %>
+          <% if(todos.length !==0) { %>
+            <ul>
+              <% for(let todo of todos){ %>
+                <li>
+                  <%= todo.content %>
+                </li>
+                <% } %>
+            </ul>
+            <% } %>
+    </div>
   </div>
 </body>
 
