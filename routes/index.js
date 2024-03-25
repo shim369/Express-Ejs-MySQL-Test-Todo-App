@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
       console.log(error);
       console.log(results);
       res.render('index', {
-        title: 'ToDo App',
+        title: 'ToDo List App',
         todos: results,
       });
     }
