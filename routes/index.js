@@ -42,4 +42,20 @@ router.post('/', function(req, res, next) {
   );
 });
 
+router.post('/delete/:id', function(req, res, next) {
+  const id = req.params.id;
+  connection.query(
+    `delete from tasks where id = ?;`,
+    [id],
+    (error, results) => {
+      console.log(error);
+      if (error) {
+        res.status(500).send('Error deleting task');
+      } else {
+        res.redirect('/');
+      }
+    }
+  );
+});
+
 module.exports = router;

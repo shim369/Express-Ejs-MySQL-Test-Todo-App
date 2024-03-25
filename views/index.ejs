@@ -28,7 +28,12 @@
             <ul>
               <% for(let todo of todos){ %>
                 <li>
-                  <%= todo.content %>
+                  <span>
+                    <%= todo.content %>
+                  </span>
+                  <form action="/delete/<%= todo.id %>" method="post">
+                    <button type="submit">delete</button>
+                  </form>
                 </li>
                 <% } %>
             </ul>
