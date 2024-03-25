@@ -48,15 +48,19 @@ input::placeholder {
 
 button {
   all: unset;
-  background: #fbf301;
   padding: .5rem 1rem;
   width: 50px;
   text-align: center;
   color: #0172fb;
   cursor: pointer;
+  transition: all .4s ease;
 }
 
-button:hover {
+.add-form button {
+  background: #fbf301;
+}
+
+.add-form button:hover {
   background: #fbf661;
 }
 
@@ -79,6 +83,18 @@ li {
   align-items: center;
 }
 
+li button {
+  background-color: #c4e5f8;
+}
+
+.delete-form button:hover{
+  background-color: #fff;
+}
+
 li:nth-child(odd) {
   background-color: #c4e5f8;
+}
+
+li:nth-child(odd) button {
+  background-color: #8bd0f8;
 }

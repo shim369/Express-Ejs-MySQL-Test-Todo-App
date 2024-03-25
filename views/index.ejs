@@ -17,7 +17,7 @@
       </h1>
     </header>
     <div class="todo">
-      <form action="/" method="post">
+      <form action="/" method="post" class="add-form">
         <input required type="text" name="add" placeholder="何をする?" />
         <button type="submit">追加</button>
       </form>
@@ -31,8 +31,8 @@
                   <span>
                     <%= todo.content %>
                   </span>
-                  <form action="/delete/<%= todo.id %>" method="post">
-                    <button type="submit">delete</button>
+                  <form action="/delete/<%= todo.id %>" method="post" class="delete-form">
+                    <button type="submit">削除</button>
                   </form>
                 </li>
                 <% } %>
