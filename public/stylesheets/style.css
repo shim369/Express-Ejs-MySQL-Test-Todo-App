@@ -83,11 +83,11 @@ li {
   align-items: center;
 }
 
-li button {
+.delete-form button {
   background-color: #c4e5f8;
 }
 
-.delete-btn:hover{
+.delete-form button:hover {
   background-color: #fff;
 }
 
@@ -95,6 +95,6 @@ li:nth-child(odd) {
   background-color: #c4e5f8;
 }
 
-li:nth-child(odd) button {
+li:nth-child(odd) .delete-form button {
   background-color: #8bd0f8;
 }
