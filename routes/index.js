@@ -1,8 +1,8 @@
 let express = require('express');
 let router = express.Router();
-const connection = require('mysql2-promise')();
+const mysql = require('mysql');
 
-connection.configure({
+const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -10,39 +10,52 @@ connection.configure({
   authPlugin: 'none',
 });
 
-router.get('/', async (req, res) => {
-  try {
-    const [results] = await connection.query('select * from tasks;');
-    console.log(results);
-    res.render('index', {
-      title: 'ToDo List App',
-      todos: results,
-    });
-  } catch (error) {
-    res.status(500).send('Error retrieving tasks', error);
-  }
+router.get('/', (req,res) => {
+  connection.query(
+    `select * from tasks;`,
+    (error, results) => {
+      console.log(error);
+      console.log(results);
+      res.render('index', {
+        title: 'ToDo List App',
+        todos: results,
+      });
+    }
+  );
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const content = req.body.content;
-    const [results] = await connection.query(
-      `insert into tasks (user_id, content) values (1, '${content}');`
-    );
-    res.send({ message: 'Task added successfully', todos: results });
-  } catch (error) {
-    res.status(500).json({ message: 'Error adding task', error });
-  }
+router.post('/', (req,res) => {
+  connection.connect((err) => {
+    if (err) {
+      console.error('Error connecting:', err);
+    } else {
+      console.log('Connected to MySQL server');
+    }
+  });
+  const todo = req.body.add;
+  connection.query(
+    `insert into tasks (user_id, content) values (1, '${todo}');`,
+    (error, results) => {
+      console.log(error);
+      res.redirect('/');
+    }
+  );
 });
 
-router.post('/delete/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-    await connection.query('delete from tasks where id = ?;', [id]);
-    res.redirect('/');
-  } catch (error) {
-    res.status(404).send('Task not found', error);
-  }
+router.post('/delete/:id', (req,res) => {
+  const id = req.params.id;
+  connection.query(
+    `delete from tasks where id = ?;`,
+    [id],
+    (error, results) => {
+      console.log(error);
+      if (error) {
+        res.status(500).send('Error deleting task');
+      } else {
+        res.redirect('/');
+      }
+    }
+  );
 });
 
 module.exports = router;
