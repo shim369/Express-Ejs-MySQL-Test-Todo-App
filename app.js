@@ -7,6 +7,9 @@ let logger = require('morgan');
 let indexRouter = require('./routes/index');
 
 let app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
