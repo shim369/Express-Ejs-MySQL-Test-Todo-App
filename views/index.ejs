@@ -6,7 +6,7 @@
   <title>
     <%= title %>
   </title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/css/style.css' />
 </head>
 
 <body>
@@ -21,10 +21,10 @@
         <input required type="text" name="add" placeholder="何をする?" />
         <button>追加</button>
       </div>
-      <% if(todos.length === 0) { %>
+      <% if(todos.length===0) { %>
         <p class="nothing-todo">Todoが何もありません。</p>
         <% } %>
-          <% if(todos.length !== 0) { %>
+          <% if(todos.length !==0) { %>
             <ul id="todos">
               <% for(let todo of todos){ %>
                 <li id="<%= todo.id %>" data-id="<%= todo.id %>">
