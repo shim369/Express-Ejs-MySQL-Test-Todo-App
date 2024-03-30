@@ -87,14 +87,14 @@ li button {
   background-color: #c4e5f8;
 }
 
-.delete-form button:hover{
-  background-color: #fff;
-}
-
 li:nth-child(odd) {
   background-color: #c4e5f8;
 }
 
 li:nth-child(odd) button {
   background-color: #8bd0f8;
+}
+
+li button:hover {
+  background-color: #fff;
 }
