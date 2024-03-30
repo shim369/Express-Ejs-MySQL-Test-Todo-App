@@ -19,34 +19,29 @@ router.get('/', async (req, res) => {
       todos: results,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error retrieving tasks');
+    res.status(500).send('Error retrieving tasks', error);
   }
 });
 
 router.post('/', async (req, res) => {
   try {
-    const todo = req.body.add;
+    const content = req.body.content;
     const [results] = await connection.query(
-      `insert into tasks (user_id, content) values (1, '${todo}');`
+      `insert into tasks (user_id, content) values (1, '${content}');`
     );
-    console.log(results);
-    console.log('Task added successfully');
-    res.redirect('/');
+    res.send({ message: 'Task added successfully', todos: results });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error adding task' });
+    res.status(500).json({ message: 'Error adding task', error });
   }
 });
 
 router.post('/delete/:id', async (req, res) => {
-  const id = req.params.id;
   try {
+    const id = req.params.id;
     await connection.query('delete from tasks where id = ?;', [id]);
     res.redirect('/');
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error deleting task');
+    res.status(404).send('Task not found', error);
   }
 });
 

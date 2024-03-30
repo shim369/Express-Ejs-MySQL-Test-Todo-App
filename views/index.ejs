@@ -17,20 +17,21 @@
       </h1>
     </header>
     <div class="todo">
-      <form action="/" method="post" class="add-form">
+      <div id="add-form" class="add-form">
         <input required type="text" name="add" placeholder="何をする?" />
-        <button type="submit">追加</button>
-      </form>
-      <% if(todos.length===0) { %>
+        <button>追加</button>
+      </div>
+      <% if(todos.length === 0) { %>
         <p class="nothing-todo">Todoが何もありません。</p>
         <% } %>
-          <% if(todos.length !==0) { %>
-            <ul>
+          <% if(todos.length !== 0) { %>
+            <ul id="todos">
               <% for(let todo of todos){ %>
-                <li>
+                <li id="<%= todo.id %>" data-id="<%= todo.id %>">
                   <span>
                     <%= todo.content %>
                   </span>
+
                   <form action="/delete/<%= todo.id %>" method="post" class="delete-form">
                     <button type="submit">削除</button>
                   </form>
@@ -40,6 +41,51 @@
             <% } %>
     </div>
   </div>
+  <script>
+    const addTask = async (content) => {
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content }),
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        // 新しいタスクの追加処理
+        const list = document.querySelector('#todos');
+        const span = document.createElement('span');
+        span.textContent = content;
+        const label = document.createElement('label');
+        label.appendChild(span);
+        const button = document.createElement('button');
+        button.textContent = "削除";
+        const li = document.createElement('li');
+        li.appendChild(label);
+        li.appendChild(button);
+
+        list.appendChild(li);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const addButton = document.querySelector('.add-form button');
+    addButton.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const input = document.querySelector('.add-form input');
+      const content = input.value;
+
+      addTask(content);
+      input.value = '';
+      input.focus();
+    });
+
+  </script>
+
 </body>
 
 </html>
